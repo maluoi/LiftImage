@@ -14,7 +14,8 @@
 - **Streaming.** Every file is a mip chain. Any prefix decodes to a smaller mip, so you can show mip 2 while the rest arrives, then continue without redoing work.
 - **One asset for every GPU.** The output is plain pixels, ready to upload or to hand to your runtime BC or ASTC encoder.
 - **Texture aware.** It handles gray, normal maps, packed data like occlusion, roughness and metalness, cutout, blended and premultiplied alpha, array layers and cubemaps.
-- **Small and safe.** The decoder is integer-only and bit-exact on every compiler and platform, and the encoder writes the same bytes for the same input on any of them. Every entry point validates its input and is fuzzed, so untrusted files are safe to open. It builds warning-free as C11, C++11 and with MSVC, and reads files in place, so you can map them straight from disk.
+- **Small.** The decoder is about 45 KB of machine code (43 KB from clang, 47 KB from gcc, built for AVX2), and the encoder adds 53 to 71 KB, all from about 1,800 lines of C with no dependencies. For scale, on Fedora's x86-64 builds the WebP decoder library is 297 KB, AVIF's dav1d decoder alone is 1.8 MB, and libjxl is 4.1 MB with its encoder.
+- **Safe and exact.** The decoder is integer-only and bit-exact on every compiler and platform, and the encoder writes the same bytes for the same input on any of them. Every entry point validates its input and is fuzzed, so untrusted files are safe to open. It builds warning-free as C11, C++11 and with MSVC, and reads files in place, so you can map them straight from disk.
 
 ## How it compares
 
