@@ -1,4 +1,4 @@
-// lift_image.h: Lift Image, a baked image format for real-time engines. Specified in docs/format.md.
+// lift_image.h: Lift Image, a fast, light image format built with 3D in mind. Specified in docs/format.md.
 // Generated from src/ by tools/amalgamate.py, so edit those instead.
 // MIT License, Copyright (c) 2026 Nick Klingensmith. The full text is at the end of this file.
 //

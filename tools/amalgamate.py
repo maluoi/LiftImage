@@ -17,7 +17,7 @@ def body(name):
 def main():
 	api     = open(os.path.join(ROOT, "src", "lfi.h")).read().replace("#pragma once\n", "").strip()
 	license = open(os.path.join(ROOT, "LICENSE")).read().strip().splitlines()
-	out = f"""// lift_image.h: Lift Image, a baked image format for real-time engines. Specified in docs/format.md.
+	out = f"""// lift_image.h: Lift Image, a fast, light image format built with 3D in mind. Specified in docs/format.md.
 // Generated from src/ by tools/amalgamate.py, so edit those instead.
 // MIT License, {license[2]}. The full text is at the end of this file.
 //

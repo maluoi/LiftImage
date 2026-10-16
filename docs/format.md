@@ -1,6 +1,6 @@
 # Lift Image format, version 1
 
-Lift Image (`.lfi`) stores 8-bit and HDR images, array textures and cubemaps for real-time engines. A decoder turns a file, or any prefix of it, into plain pixels at a chosen mip level, using integer arithmetic only. This document specifies the bitstream completely, so an independent decoder can produce output identical to the reference one bit for bit.
+Lift Image (`.lfi`) stores 8-bit and HDR images, array textures and cubemaps. A decoder turns a file, or any prefix of it, into plain pixels at a chosen mip level, using integer arithmetic only. This document specifies the bitstream completely, so an independent decoder can produce output identical to the reference one bit for bit.
 
 The pipeline, from file to pixels:
 

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Lift Image
 
-**Lift Image (`.lfi`)** is a baked image format for real-time engines. On one thread it decodes 1.8 to 15× faster than JPEG, WebP, AVIF and JPEG XL at the same SSIMULACRA2, from files smaller than WebP's and libjpeg-turbo's and the same size as mozjpeg's; JPEG XL is 21% smaller. Lossless is 19% smaller than PNG and decodes over 3× faster. HDR decodes straight to RGBA16F, RG11B10F or RGB9E5, about 6× faster than a .hdr loader, from files about 30× smaller. Every file is a mip chain: any prefix decodes to a smaller mip, so you can show mip 2 while the rest streams in and continue without redoing work. The output is plain pixels for your runtime BC/ASTC encoder, so one asset serves every GPU. It's about 1,800 lines of dependency-free C11, with an integer-only, bit-exact decoder of about 48 KB. Packed material maps get a data mode with no color transform.
+**Lift Image (`.lfi`)** is a general image format with good ergonomics and real care for 3D assets: textures, normal maps, packed material data, mip chains, HDR and cubemaps. On one thread it decodes 2 to 16× faster than JPEG, WebP, AVIF and JPEG XL at the same SSIMULACRA2, from files the size of WebP's and mozjpeg's and smaller than libjpeg-turbo's; JPEG XL's are 16% smaller. Lossless is 18% smaller than PNG and decodes over 3× faster. HDR decodes straight to RGBA16F, RG11B10F or RGB9E5, about 3× faster than a .hdr loader, from files about 10× smaller. Every file is a mip chain: any prefix decodes to a smaller mip, so you can show mip 2 while the rest streams in and continue without redoing work. The output is plain pixels for your runtime BC/ASTC encoder, so one asset serves every GPU. It's about 1,800 lines of dependency-free C11, with an integer-only, bit-exact decoder of about 48 KB. Packed material maps get a data mode with no color transform.
 
 Inside: reversible opponent color (luma, red less green, blue less green, by lifting), a 9/3 integer lifting wavelet (5/3's predict, a 4-tap update) in 16-bit lanes over 512x512 tiles, with 4 fractional bits for lossy, deadzone quantization with rate-aware decisions and per-band centroid offsets, chroma detail predicted from luma, and tANS over two interleaved streams that carry each symbol's raw bits inline. The format is specified in `docs/format.md`.
 
@@ -12,7 +12,7 @@ Inside: reversible opponent color (luma, red less green, blue less green, by lif
 
 These are budgets, not afterthoughts. A change has to earn its keep against all of them.
 
-- **Decode speed**, single-threaded. The engine's asset pipeline parallelizes across files, so the codec never spawns threads.
+- **Decode speed**, single-threaded. Callers parallelize across files, so the codec never spawns threads.
 - **File size at matched quality**, judged by BD-rate on SSIMULACRA2 for color, with Butteraugli as a check. PSNR, and BC1 PSNR since the output feeds a GPU block encoder, are guards. Gray and normal maps are data, judged by PSNR and angle error.
 - **Lines of code and binary size**, for the decoder and the encoder separately. The decoder is about 1,070 lines and 48 KB.
 - **Simplicity.** One code path beats two, and a derived value beats a stored one.

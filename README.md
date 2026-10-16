@@ -1,6 +1,6 @@
-# Lift Image
+<p align="center"><img src="docs/images/lift_header.svg" alt="Lift Image" width="100%"></p>
 
-**A baked image format for real-time engines.** Smaller than JPEG, faster to decode than JPEG or PNG, and every file is a mip chain you can stream. One dependency-free header, in C or C++.
+**Smaller than JPEG, faster to decode than JPEG or PNG, and every file is a mip chain you can stream.** One dependency-free header, in C or C++.
 
 ![Parrot crop: source, JPEG q75 and q90, and Lift Image at steps 8, 16 and 32](https://raw.githubusercontent.com/maluoi/LiftImage-lab/main/examples/compare/parrot.png)
 
@@ -8,9 +8,9 @@
 
 ## Why
 
-- **Fast.** On one thread, Lift decodes 1.8 to 15× faster than JPEG, WebP, AVIF and JPEG XL at the same perceptual quality, at 300 to 700 megapixels a second on a 2 GHz core. Its files are smaller than WebP's and every JPEG encoder's but mozjpeg's, which it matches.
-- **Lossless too.** Lossless files are 19% smaller than PNG, and decode 3.2× faster.
-- **HDR.** HDR decodes straight to RGBA16F, RG11B10F or RGB9E5, from files about 30× smaller than Radiance `.hdr`.
+- **Fast.** On one thread, Lift decodes 2 to 16× faster than JPEG, WebP, AVIF and JPEG XL at the same perceptual quality, at 300 to 700 megapixels a second on a 2 GHz core. Its files are the size of WebP's and mozjpeg's and smaller than libjpeg-turbo's, while jpegli's are 5% smaller, AVIF's 12% and JPEG XL's 16%.
+- **Lossless too.** Lossless files are 18% smaller than PNG, and decode 3.2× faster.
+- **HDR.** HDR decodes straight to RGBA16F, RG11B10F or RGB9E5, from files about 10× smaller than Radiance `.hdr`.
 - **Streaming.** Every file is a mip chain. Any prefix decodes to a smaller mip, so you can show mip 2 while the rest arrives, then continue without redoing work.
 - **One asset for every GPU.** The output is plain pixels, ready to upload or to hand to your runtime BC or ASTC encoder.
 - **Texture aware.** It handles gray, normal maps, packed data like occlusion, roughness and metalness, cutout, blended and premultiplied alpha, array layers and cubemaps.
@@ -18,31 +18,31 @@
 
 ## How it compares
 
-Quality is judged by [SSIMULACRA2](https://github.com/cloudinary/ssimulacra2), a perceptual metric, with PSNR alongside since it's what engines have traditionally used. Speeds are at the same SSIMULACRA2, on one thread.
+Quality is judged by [SSIMULACRA2](https://github.com/cloudinary/ssimulacra2), a perceptual metric, with PSNR alongside as the traditional measure. Speeds are at the same SSIMULACRA2, on one thread.
 
 | Lift Image versus | File size at the same SSIMULACRA2 | File size at the same PSNR | Decoding | Encoding |
 |---|---|---|---|---|
-| stb_image_write and stb_image | 14% smaller | 32% smaller | 2.6× faster | 1.1× slower |
-| libjpeg-turbo | 14% smaller | 33% smaller | 1.8× faster | 8.0× slower |
-| libjpeg-turbo, progressive | 9% smaller | 29% smaller | 5.4× faster | 1.3× slower |
-| mozjpeg | the same | 25% smaller | 3.3× faster | 4.4× faster |
-| mozjpeg, tuned for PSNR | 18% smaller | 4% smaller | 3.7× faster | 6.6× faster |
-| jpegli | 7% larger | 16% smaller | 4.9× faster | 1.4× slower |
-| WebP | 9% smaller | 2% smaller | 8.2× faster | 5.3× faster |
-| WebP, method 6 | 3% smaller | the same | 8.0× faster | 12× faster |
-| AVIF | 10% larger | 36% larger | 9.1× faster | 24× faster |
-| JPEG XL | 21% larger | 1% smaller | 15× faster | 15× faster |
+| stb_image_write and stb_image | 14% smaller | 31% smaller | 2.6× faster | 1.2× slower |
+| libjpeg-turbo | 15% smaller | 31% smaller | 2.0× faster | 8.7× slower |
+| libjpeg-turbo, progressive | 10% smaller | 28% smaller | 5.9× faster | 1.3× slower |
+| mozjpeg | 1% smaller | 23% smaller | 3.6× faster | 4.3× faster |
+| mozjpeg, tuned for PSNR | 18% smaller | 3% smaller | 4.0× faster | 6.3× faster |
+| jpegli | 5% larger | 16% smaller | 5.0× faster | 1.5× slower |
+| WebP | 5% smaller | 1% larger | 8.0× faster | 4.7× faster |
+| WebP, method 6 | the same | 3% larger | 7.8× faster | 11× faster |
+| AVIF | 14% larger | 41% larger | 9.1× faster | 24× faster |
+| JPEG XL | 19% larger | 1% larger | 16× faster | 13× faster |
 
-The test images are 33 lossless images from [LiftImage-lab](https://github.com/maluoi/LiftImage-lab), which holds the test corpus and benchmarks: textures, photos and a screenshot. Sizes and speeds are averaged over the quality range of Lift's steps 4 to 32, about SSIMULACRA2 44 to 88, wherever both codecs reach. The progressive, mozjpeg, jpegli and AVIF rows take the better of 4:2:0 and 4:4:4 at each quality, baseline libjpeg-turbo uses 4:2:0, and stb_image_write picks its own. JPEGs decode with libjpeg-turbo, except stb's, which stb_image decodes. Baseline libjpeg-turbo and stb only reach the upper 60% of that range. The newer formats use their libraries' defaults: libwebp 1.6, jpegli from libjxl 0.11.2, libavif 1.3 with libaom 3.13 at speed 6 and dav1d 1.5 on one thread, and libjxl 0.11.2 at effort 7. The lab repository reproduces every row.
+The test images are 33 lossless images from [LiftImage-lab](https://github.com/maluoi/LiftImage-lab), which holds the test corpus and benchmarks: textures, photos and screenshots. Sizes and speeds are averaged over the quality range of Lift's steps 4 to 32, about SSIMULACRA2 44 to 88, wherever both codecs reach. The progressive, mozjpeg, jpegli and AVIF rows take the better of 4:2:0 and 4:4:4 at each quality, baseline libjpeg-turbo uses 4:2:0, and stb_image_write picks its own. JPEGs decode with libjpeg-turbo, except stb's, which stb_image decodes. Baseline libjpeg-turbo and stb only reach the upper 60% of that range. The newer formats use their libraries' defaults: libwebp 1.6, jpegli from libjxl 0.11.2, libavif 1.3 with libaom 3.13 at speed 6 and dav1d 1.5 on one thread, and libjxl 0.11.2 at effort 7. The lab repository reproduces every row.
 
 | Lift Image versus | File size | Decoding |
 |---|---|---|
-| PNG, both lossless | 19% smaller | 3.2× faster |
-| WebP, both lossless | 8% larger | 3.0× faster |
-| JPEG XL at effort 7, both lossless | 17% larger | 35× faster |
-| Radiance `.hdr`, Lift at step 16 | 34× smaller | 5.9× faster |
+| PNG, both lossless | 18% smaller | 3.2× faster |
+| WebP, both lossless | 10% larger | 3.0× faster |
+| JPEG XL at effort 7, both lossless | 19% larger | 39× faster |
+| Radiance `.hdr`, Lift at step 16 | 10× smaller | 3.2× faster |
 
-The lossless rows use the same 33 images, and the HDR row 2 of its environment maps against stb_image. More side-by-side crops, including normal maps, packed material data, alpha and HDR, are in [the lab's `examples/compare`](https://github.com/maluoi/LiftImage-lab/tree/main/examples/compare).
+The lossless rows use the same 33 images, and the HDR row its 10 environment maps, decoded by stb_image. More side-by-side crops, including normal maps, packed material data, alpha and HDR, are in [the lab's `examples/compare`](https://github.com/maluoi/LiftImage-lab/tree/main/examples/compare).
 
 ## Using it
 
@@ -50,7 +50,7 @@ With CMake, fetch this repository and link the `lift_image` library:
 
 ```cmake
 include(FetchContent)
-FetchContent_Declare(lift_image GIT_REPOSITORY https://github.com/maluoi/LiftImage.git GIT_TAG v1.0.0 GIT_SHALLOW TRUE)
+FetchContent_Declare(lift_image GIT_REPOSITORY https://github.com/maluoi/LiftImage.git GIT_TAG main GIT_SHALLOW TRUE)
 FetchContent_MakeAvailable(lift_image)
 target_link_libraries(your_app PRIVATE lift_image)
 ```
