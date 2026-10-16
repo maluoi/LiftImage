@@ -1,0 +1,4 @@
+[Thumbnailer Entry]
+TryExec=lfi
+Exec=lfi thumbnail --size %s %i %o
+MimeType=image/x-lift;

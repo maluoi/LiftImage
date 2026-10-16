@@ -1,0 +1,4 @@
+build/
+__pycache__/
+plugins/macos/build/
+.claude/settings.local.json

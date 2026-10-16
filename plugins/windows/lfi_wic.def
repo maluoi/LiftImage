@@ -1,0 +1,6 @@
+LIBRARY lfi_wic
+EXPORTS
+	DllGetClassObject   PRIVATE
+	DllCanUnloadNow     PRIVATE
+	DllRegisterServer   PRIVATE
+	DllUnregisterServer PRIVATE

@@ -1,0 +1,7 @@
+{
+    "CacheThumbnail": true,
+    "KPlugin": {
+        "MimeTypes": [ "image/x-lift" ],
+        "Name": "Lift Image"
+    }
+}

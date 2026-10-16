@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>         <string>io.github.maluoi.liftimage.preview</string>
+	<key>CFBundleName</key>               <string>Lift Image Previews</string>
+	<key>CFBundleExecutable</key>         <string>LiftPreview</string>
+	<key>CFBundlePackageType</key>        <string>XPC!</string>
+	<key>CFBundleVersion</key>            <string>1</string>
+	<key>CFBundleShortVersionString</key> <string>1.0</string>
+	<key>LSMinimumSystemVersion</key>     <string>12.0</string>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionPointIdentifier</key> <string>com.apple.quicklook.preview</string>
+		<key>NSExtensionPrincipalClass</key>  <string>LiftPreviewProvider</string>
+		<key>NSExtensionAttributes</key>
+		<dict>
+			<key>QLIsDataBasedPreview</key>    <true/>
+			<key>QLSupportedContentTypes</key> <array><string>io.github.maluoi.lift-image</string></array>
+		</dict>
+	</dict>
+</dict>
+</plist>
